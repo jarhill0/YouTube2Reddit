@@ -69,8 +69,11 @@ for channel_id in subbed_channels:
 log_in_to_reddit()
 
 for video in videos_to_submit:
-    reddit.subreddit(target_sub).submit('%s — %s' % (video['title'], video['author']),
-                                        url=video['url'],
-                                        resubmit=False,
-                                        send_replies=False)
+    try:
+        reddit.subreddit(target_sub).submit('%s — %s' % (video['title'], video['author']),
+                                            url=video['url'],
+                                            resubmit=False,
+                                            send_replies=False)
+    except:
+        print('Already submitted.')
 write_last_run()
