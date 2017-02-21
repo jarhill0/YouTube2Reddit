@@ -12,8 +12,6 @@ with open('config/target_sub.txt') as f:
 
 subbed_users = get_subbed_users()
 subbed_channels = get_subbed_channels()
-print(subbed_channels)
-print(subbed_users)
 
 for user in subbed_users:
     videos = get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
