@@ -42,23 +42,11 @@ def get_videos(channel_feed):
     return items
 
 
-def read_login_resource(name):
-    with open('login/%s.txt' % name) as f:
-        return f.read().strip()
-
-
 def log_in_to_reddit():
     global reddit
-    client_id = read_login_resource('client_id')
-    client_secret = read_login_resource('client_secret')
-    username = read_login_resource('username')
-    password = read_login_resource('password')
     reddit = praw.Reddit(
-        client_id=client_id,
-        client_secret=client_secret,
-        user_agent='YouTube2Reddit',
-        username=username,
-        password=password)
+        'YouTube2Reddit',
+        user_agent='YouTube2Reddit')
 
 
 def write_last_run():
