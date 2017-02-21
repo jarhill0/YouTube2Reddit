@@ -5,8 +5,6 @@ from functions import find_epoch
 from functions import get_videos
 from functions import write_last_run
 
-
-
 videos_to_submit = []
 
 with open('config/target_sub.txt') as f:
@@ -27,7 +25,7 @@ for channel_id in subbed_channels:
     for video in videos:
         videos_to_submit.append(video)
 
-log_in_to_reddit()
+reddit = log_in_to_reddit()
 
 for video in videos_to_submit:
     try:

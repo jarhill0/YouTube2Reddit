@@ -7,8 +7,7 @@ from datetime import datetime
 
 
 def log_in_to_reddit():
-    global reddit
-    reddit = praw.Reddit(
+    return praw.Reddit(
         'YouTube2Reddit',
         user_agent='YouTube2Reddit')
 
