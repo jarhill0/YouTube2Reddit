@@ -13,7 +13,17 @@ Since it's designed to be called periodically, I recommend running it on a cronj
     - `subbed_users.txt`: A list of Youtube usernames you wish to be "subscribed" to, one per line. **Note: These are usernames (like `CGPGrey`), not channel names (like `UCekQr9znsk2vWxBo3YiLq2w`).**
     - `subbed_channels.txt`: A list of Youtube channel names you wish to be "subscribed" to, one per line. Do not duplicate channels from `subbed_users.txt`. Both files exist because some channels do not have usernames, only cryptic channel names. **Note: These are channel names (like `UCekQr9znsk2vWxBo3YiLq2w`), not usernames (like `CGPGrey`).**
     - `target_sub.txt`: The name of the subreddit the script should submit to. I recommend that the account you run the script on should be an approved submitted or a moderator in whatever subreddit it submits to, because it will often submit several posts at once, which would be seen as spam in a subreddit where the account is not an approved submitter or a moderator.
-4. Open the `login` folder and create the following text files:
+4. Create `praw.ini` in the following format:
+    ```
+    
+    [YouTube2Reddit]
+    client_id=
+    client_secret=
+    username=
+    password=
+    
+    ```
+    Define each variable immediately after the = sign in the following way:
     - `client_id.txt`: The client ID from step 2.
     - `client_secret.txt`: The client secret from step 2.
     - `username.txt`: The username you want this script to run on. Make sure it has enough karma to post without captchas.
