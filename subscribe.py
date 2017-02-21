@@ -1,3 +1,6 @@
+from update_wiki import update_wiki
+
+
 def is_username():
     user_or_channel = input('User or channel? [u/c]\n').lower()
     if user_or_channel in ['u', 'user']:
@@ -29,3 +32,5 @@ def subscribe():
 
 print('Subcribe YouTube2Reddit to another channel.')
 subscribe()
+print('Updating wiki…')
+update_wiki()
