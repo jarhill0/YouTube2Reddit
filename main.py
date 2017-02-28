@@ -31,6 +31,6 @@ for video in videos_to_submit:
                                             url=video['url'],
                                             resubmit=False,
                                             send_replies=False)
-    except:
+    except praw.exceptions.APIException:
         print('Already submitted.')
 write_last_run()
