@@ -6,11 +6,12 @@ from functions import get_videos
 run_it = input('WARNING! Running this script means that the bot will not post any videos to Reddit that were'
                ' posted prior to running this script. This is a good thing if you have never run the bot before,'
                ' as it will prevent spam, but it is probably a bad thing if you have run the bot before. Do you'
-               ' wish to continue? [y/n]').lower()
+               ' wish to continue? [y/n] ').lower()
 if run_it not in ['y', 'yes']:
     print('Exiting.')
     exit()
 
+videos_to_submit = []
 subbed_users = get_subbed_users()
 subbed_channels = get_subbed_channels()
 
