@@ -28,25 +28,15 @@ def get_subbed_channels():
     return subbed_channels
 
 
-def find_epoch(datetime_object):
-    epoch = datetime.utcfromtimestamp(0)
-    return int((datetime.fromtimestamp(mktime(struct_time(datetime_object))) - epoch).total_seconds())
-
-
-with open('config/last_run.txt') as f:
-    last_run = int(f.read().strip())
-
-
 def get_videos(channel_feed):
     feed = feedparser.parse(channel_feed)
     items = []
     for post in reversed(feed.entries):
-        if find_epoch(post.published_parsed) > last_run:
-            items.append(dict([
-                ('title', post.title),
-                ('author', post.author),
-                ('url', post.link)
-            ]))
+        items.append({
+            'title': post.title,
+            'author': post.author,
+            'url': post.link
+        })
     return items
 
 
