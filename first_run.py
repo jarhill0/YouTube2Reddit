@@ -12,6 +12,7 @@ if run_it not in ['y', 'yes']:
     exit()
 
 videos_to_submit = []
+submitted_this_run = []
 subbed_users = get_subbed_users()
 subbed_channels = get_subbed_channels()
 
