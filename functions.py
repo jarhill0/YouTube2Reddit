@@ -1,8 +1,6 @@
 import praw
 import feedparser
-from time import mktime
-from time import struct_time
-from time import time
+from time import mktime, struct_time, time
 from datetime import datetime
 
 

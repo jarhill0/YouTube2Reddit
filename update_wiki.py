@@ -1,6 +1,4 @@
-from functions import log_in_to_reddit
-from functions import get_subbed_users
-from functions import get_subbed_channels
+from functions import log_in_to_reddit, get_subbed_users, get_subbed_channels
 
 
 def update_wiki():
@@ -19,3 +17,7 @@ def update_wiki():
 
     reddit.subreddit(target_sub).wiki.create('subbed_users', subbed_users_wiki)
     reddit.subreddit(target_sub).wiki.create('subbed_channels', subbed_channels_wiki)
+
+
+if __name__ == '__main__':
+    update_wiki()
