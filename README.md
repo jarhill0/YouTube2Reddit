@@ -1,4 +1,4 @@
-#YouTube2Reddit: a Python script to periodically post YouTube videos from specific channels to a specific subreddit
+# YouTube2Reddit: a Python script to periodically post YouTube videos from specific channels to a specific subreddit
 
 This script is designed to be called periodically in its home directory. Its purpose is to post new YouTube videos from predefined YouTube channels to a predefined subreddit.
 
