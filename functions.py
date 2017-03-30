@@ -1,6 +1,6 @@
 import praw
 import feedparser
-from time import mktime, struct_time, time
+from time import mktime, struct_time, time, sleep
 from datetime import datetime
 
 
@@ -27,6 +27,7 @@ def get_subbed_channels():
 
 
 def get_videos(channel_feed):
+    sleep(.75)
     feed = feedparser.parse(channel_feed)
     items = []
     for post in reversed(feed.entries):
