@@ -5,7 +5,7 @@ import praw
 
 def main():
     videos_to_submit = []
-    submitted_this_run = {}
+    submitted_this_run = set()
     target_sub = config.sub_name
     reddit = functions.log_in_to_reddit()
     already_submitted = functions.get_already_submitted(reddit)
