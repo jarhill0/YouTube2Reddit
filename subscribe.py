@@ -21,23 +21,24 @@ def new_subscription():
 
 
 def subscribe():
-    if is_username():
-        new_sub = new_subscription()
-        with open('config/subbed_users.txt', 'a') as f:
-            f.write(new_sub + '\n')
-        first_run.list_old_videos([new_sub], [])
-    else:
-        new_sub = new_subscription()
-        with open('config/subbed_channels.txt', 'a') as f:
-            f.write(new_sub + '\n')
-        first_run.list_old_videos([], [new_sub])
+    new_users = []
+    new_channels = []
 
-    if input('Add another subscription? [y/n]\n').lower() in ['yes', 'y']:
-        subscribe()
+    while True:
+        if is_username():
+            new_users.append(new_subscription())
+        else:
+            new_channels.append(new_subscription())
+
+        if input('Add another subscription? [y/n]\n').lower() not in ['yes', 'y']:
+            break
+
+    reddit = functions.log_in_to_reddit()
+    functions.extend_subbed_users(reddit, new_users)
+    functions.extend_subbed_channels(reddit, new_channels)
+    first_run.first_run(new_users, new_channels)
 
 
 if __name__ == '__main__':
     print('Subscribe YouTube2Reddit to another channel.')
     subscribe()
-    print('Updating wiki…')
-    update_wiki.update_wiki()
