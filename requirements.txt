@@ -1,2 +1,0 @@
-feedparser==5.2.1
-praw==4.4.0
