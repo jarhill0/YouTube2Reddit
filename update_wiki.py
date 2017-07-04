@@ -1,10 +1,10 @@
-from functions import log_in_to_reddit, get_subbed_users, get_subbed_channels
+import functions
 
 
 def update_wiki():
-    subbed_users = list(get_subbed_users())
-    subbed_channels = list(get_subbed_channels())
-    reddit = log_in_to_reddit()
+    subbed_users = list(functions.get_subbed_users())
+    subbed_channels = list(functions.get_subbed_channels())
+    reddit = functions.log_in_to_reddit()
     with open('config/target_sub.txt') as f:
         target_sub = f.read().strip()
 

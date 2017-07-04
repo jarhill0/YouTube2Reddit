@@ -1,7 +1,8 @@
-import praw
+import datetime
+import time
+
 import feedparser
-from time import mktime, struct_time, time, sleep
-from datetime import datetime
+import praw
 
 
 def log_in_to_reddit():
@@ -27,7 +28,7 @@ def get_subbed_channels():
 
 
 def get_videos(channel_feed):
-    sleep(.75)
+    time.sleep(.75)
     feed = feedparser.parse(channel_feed)
     items = []
     for post in reversed(feed.entries):
@@ -41,4 +42,4 @@ def get_videos(channel_feed):
 
 def write_last_run():
     with open('config/last_run.txt', 'w+') as f:
-        f.write(str(int(time())))
+        f.write(str(int(time.time())))

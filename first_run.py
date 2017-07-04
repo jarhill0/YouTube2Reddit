@@ -1,4 +1,4 @@
-from functions import log_in_to_reddit, get_subbed_users, get_subbed_channels, get_videos
+import functions
 
 
 def list_old_videos(subbed_users, subbed_channels):
@@ -6,12 +6,12 @@ def list_old_videos(subbed_users, subbed_channels):
     submitted_this_run = []
 
     for user in subbed_users:
-        videos = get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
+        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
         for video in videos:
             videos_to_submit.append(video)
 
     for channel_id in subbed_channels:
-        videos = get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
+        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
         for video in videos:
             videos_to_submit.append(video)
 
@@ -32,4 +32,4 @@ if __name__ == '__main__':
         print('Exiting.')
         exit()
     else:
-        list_old_videos(get_subbed_users(), get_subbed_channels())
+        list_old_videos(functions.get_subbed_users(), functions.get_subbed_channels())

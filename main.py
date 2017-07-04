@@ -1,4 +1,4 @@
-from functions import log_in_to_reddit, get_subbed_users, get_subbed_channels, get_videos, write_last_run
+import functions
 import praw
 
 if __name__ == '__main__':
@@ -11,22 +11,22 @@ if __name__ == '__main__':
         already_submitted.remove('')
     submitted_this_run = []
 
-    subbed_users = get_subbed_users()
-    subbed_channels = get_subbed_channels()
+    subbed_users = functions.get_subbed_users()
+    subbed_channels = functions.get_subbed_channels()
 
     for user in subbed_users:
-        videos = get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
+        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
         for video in videos:
             if video['url'] not in already_submitted:
                 videos_to_submit.append(video)
 
     for channel_id in subbed_channels:
-        videos = get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
+        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
         for video in videos:
             if video['url'] not in already_submitted:
                 videos_to_submit.append(video)
 
-    reddit = log_in_to_reddit()
+    reddit = functions.log_in_to_reddit()
 
     for video in videos_to_submit:
         try:
@@ -42,6 +42,3 @@ if __name__ == '__main__':
     with open('config/already_submitted.txt', 'a') as f:
         for url in submitted_this_run:
             f.write(url + '\n')
-
-    # leaving this in for easier monitoring. It no longer serves any functional purpose.
-    write_last_run()

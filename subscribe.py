@@ -1,5 +1,5 @@
-from update_wiki import update_wiki
-from first_run import list_old_videos
+import update_wiki
+import first_run
 
 
 def is_username():
@@ -24,12 +24,12 @@ def subscribe():
         new_sub = new_subscription()
         with open('config/subbed_users.txt', 'a') as f:
             f.write(new_sub + '\n')
-        list_old_videos([new_sub], [])
+        first_run.list_old_videos([new_sub], [])
     else:
         new_sub = new_subscription()
         with open('config/subbed_channels.txt', 'a') as f:
             f.write(new_sub + '\n')
-        list_old_videos([], [new_sub])
+        first_run.list_old_videos([], [new_sub])
 
     if input('Add another subscription? [y/n]\n').lower() in ['yes', 'y']:
         subscribe()
@@ -39,4 +39,4 @@ if __name__ == '__main__':
     print('Subscribe YouTube2Reddit to another channel.')
     subscribe()
     print('Updating wiki…')
-    update_wiki()
+    update_wiki.update_wiki()
