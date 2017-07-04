@@ -25,8 +25,10 @@ def get_already_submitted(reddit):
 
 
 def write_already_submitted(reddit, ids):
-    if type(IDs) not in [list, set]:
+    if type(ids) not in [list, set]:
         raise ValueError("Expecting a list or set, not %s." % type(ids))
+    preexisting_conditions = set(get_already_submitted(reddit))
+    ids.update(preexisting_conditions)
 
     write_to_wiki(reddit, config.sub_name, config.already_submitted_page_name, ' '.join(ids))
 
