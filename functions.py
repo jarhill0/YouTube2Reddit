@@ -47,7 +47,8 @@ def write_already_submitted(reddit, ids):
 
 
 def get_videos(channel_feed):
-    time.sleep(.75)
+    if config.self_rate_limit:
+        time.sleep(1)
     feed = feedparser.parse(channel_feed)
     items = []
     for post in reversed(feed.entries):
