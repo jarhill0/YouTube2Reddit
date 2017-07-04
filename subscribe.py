@@ -1,17 +1,18 @@
-import update_wiki
 import first_run
+import update_wiki
 
 
 def is_username():
-    user_or_channel = input('User or channel? [u/c]\n').lower()
-    if user_or_channel in ['u', 'user']:
-        return True
-    elif user_or_channel in ['c', 'channel']:
-        return False
-    else:
-        print(
-            'Invalid. Enter U for user or C for channel (channel looks like UC2C_jShtL725hvbm1arSV9w; user looks like cgpgrey).')
-        return is_username()
+    while True:
+        user_or_channel = input('User or channel? [u/c]\n').lower()
+        if user_or_channel in ['u', 'user']:
+            return True
+        elif user_or_channel in ['c', 'channel']:
+            return False
+        else:
+            print(
+                'Invalid. Enter U for user or C for channel (channel looks like UC2C_jShtL725hvbm1arSV9w; '
+                'user looks like cgpgrey).')
 
 
 def new_subscription():
