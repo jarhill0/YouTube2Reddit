@@ -13,11 +13,11 @@ def main():
     subbed_channels = functions.get_subbed_channels(reddit)
 
     for user in subbed_users:
-        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
+        videos = functions.get_videos(config.user_base_url + user)
         videos_to_submit.extend(v for v in videos if v['id'] not in already_submitted)
 
     for channel_id in subbed_channels:
-        videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
+        videos = functions.get_videos(config.channel_base_url + channel_id)
         videos_to_submit.extend(v for v in videos if v['id'] not in already_submitted)
 
     for video in videos_to_submit:
