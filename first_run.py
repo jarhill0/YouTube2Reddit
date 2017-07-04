@@ -1,4 +1,5 @@
 import functions
+import config
 
 
 def list_old_videos(subbed_users, subbed_channels):
