@@ -33,7 +33,7 @@ def extend_subbed_channels(reddit, new_channels):
     if new_channels:
         subs = get_subbed_users(reddit)
         subs.update(new_channels)
-        write_to_wiki(reddit, config.subbed_users_page_name, '  \n'.join(sorted(subs)))
+        write_to_wiki(reddit, config.subbed_channels_page_name, '  \n'.join(sorted(subs)))
 
 
 def write_already_submitted(reddit, ids):
