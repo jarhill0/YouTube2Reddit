@@ -1,17 +1,16 @@
+import config
 import functions
 import praw
 
 if __name__ == '__main__':
     videos_to_submit = []
+    submitted_this_run = []
+    target_sub = config.sub_name
+    reddit = functions.log_in_to_reddit()
 
-    with open('config/target_sub.txt') as f:
-        target_sub = f.read().strip()
     with open('config/already_submitted.txt') as f:
         already_submitted = set(f.read().split('\n'))
         already_submitted.remove('')
-    submitted_this_run = []
-
-    reddit = functions.log_in_to_reddit()
 
     subbed_users = functions.get_subbed_users(reddit)
     subbed_channels = functions.get_subbed_channels(reddit)
@@ -19,16 +18,14 @@ if __name__ == '__main__':
     for user in subbed_users:
         videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
         for video in videos:
-            if video['url'] not in already_submitted:
+            if video['id'] not in already_submitted:
                 videos_to_submit.append(video)
 
     for channel_id in subbed_channels:
         videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?channel_id=' + channel_id)
         for video in videos:
-            if video['url'] not in already_submitted:
+            if video['id'] not in already_submitted:
                 videos_to_submit.append(video)
-
-
 
     for video in videos_to_submit:
         try:
@@ -39,8 +36,6 @@ if __name__ == '__main__':
         except praw.exceptions.APIException:
             print('Already submitted %s by %s.' % (video['title'], video['author']))
         else:
-            submitted_this_run.append(video['url'])
+            submitted_this_run.append(video['id'])
 
-    with open('config/already_submitted.txt', 'a') as f:
-        for url in submitted_this_run:
-            f.write(url + '\n')
+    functions.write_already_submitted(reddit, submitted_this_run)

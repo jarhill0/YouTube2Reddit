@@ -13,11 +13,22 @@ def log_in_to_reddit():
 
 
 def get_subbed_users(reddit):
-    return set(read_wiki_subscriptions(reddit, config.sub_name, 'subbed_users'))
+    return set(read_wiki_subscriptions(reddit, config.sub_name, config.subbed_users_page_name))
 
 
-def get_subbed_channels():
-    return set(read_wiki_subscriptions(reddit, config.sub_name, 'subbed_channels'))
+def get_subbed_channels(reddit):
+    return set(read_wiki_subscriptions(reddit, config.sub_name, config.subbed_channels_page_name))
+
+
+def get_already_submitted(reddit):
+    return set(read_wiki_subscriptions(reddit, config.sub_name, config.already_submitted_page_name))
+
+
+def write_already_submitted(reddit, ids):
+    if type(IDs) not in [list, set]:
+        raise ValueError("Expecting a list or set, not %s." % type(ids))
+
+    write_to_wiki(reddit, config.sub_name, config.already_submitted_page_name, ' '.join(ids))
 
 
 def get_videos(channel_feed):
@@ -28,10 +39,15 @@ def get_videos(channel_feed):
         items.append({
             'title': post.title,
             'author': post.author,
-            'url': post.link
+            'url': post.link,
+            'id': post.yt_videoid
         })
     return items
 
 
 def read_wiki_subscriptions(reddit, subreddit_name, page):
     return [x for x in reddit.subreddit(subreddit_name).wiki[page].content_md.split() if x != '']
+
+
+def write_to_wiki(reddit, subreddit_name, page, content):
+    reddit.subreddit(subreddit_name).wiki.create(page, content)
