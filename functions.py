@@ -1,9 +1,9 @@
-import datetime
 import time
 
-import config
 import feedparser
 import praw
+
+import config
 
 
 def log_in_to_reddit():
@@ -39,10 +39,11 @@ def extend_subbed_channels(reddit, new_channels):
 def write_already_submitted(reddit, ids):
     if type(ids) not in [list, set]:
         raise ValueError("Expecting a list or set, not %s." % type(ids))
-    preexisting_conditions = set(get_already_submitted(reddit))
-    ids.update(preexisting_conditions)
+    if len(ids) > 0:
+        preexisting_conditions = set(get_already_submitted(reddit))
+        ids.update(preexisting_conditions)
 
-    write_to_wiki(reddit, config.already_submitted_page_name, ' '.join(ids))
+        write_to_wiki(reddit, config.already_submitted_page_name, ' '.join(ids))
 
 
 def get_videos(channel_feed):
