@@ -26,24 +26,26 @@ def extend_subbed_users(reddit, new_users):
     if new_users:
         subs = get_subbed_users(reddit)
         subs.update(new_users)
-        write_to_wiki(reddit, config.subbed_users_page_name, subs)
+        write_to_wiki(reddit, config.subbed_users_page_name, '  \n'.join(sorted(subs)))
 
 
 def extend_subbed_channels(reddit, new_channels):
     if new_channels:
         subs = get_subbed_users(reddit)
         subs.update(new_channels)
-        write_to_wiki(reddit, config.subbed_users_page_name, subs)
+        write_to_wiki(reddit, config.subbed_users_page_name, '  \n'.join(sorted(subs)))
 
 
 def write_already_submitted(reddit, ids):
-    if type(ids) not in [list, set]:
-        raise ValueError("Expecting a list or set, not %s." % type(ids))
+    try:
+        ids = set(ids)
+    except TypeError:
+        raise ValueError("Expecting a list or set or other iterable, not %s." % type(ids))
     if len(ids) > 0:
         preexisting_conditions = set(get_already_submitted(reddit))
         ids.update(preexisting_conditions)
 
-        write_to_wiki(reddit, config.already_submitted_page_name, ' '.join(ids))
+        write_to_wiki(reddit, config.already_submitted_page_name, ' '.join(sorted(ids)))
 
 
 def get_videos(channel_feed):
