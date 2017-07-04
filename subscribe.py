@@ -1,5 +1,5 @@
 import first_run
-import update_wiki
+import functions
 
 
 def is_username():
@@ -36,7 +36,7 @@ def subscribe():
     reddit = functions.log_in_to_reddit()
     functions.extend_subbed_users(reddit, new_users)
     functions.extend_subbed_channels(reddit, new_channels)
-    first_run.first_run(new_users, new_channels)
+    first_run.list_old_videos(new_users, new_channels)
 
 
 if __name__ == '__main__':
