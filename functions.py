@@ -1,6 +1,7 @@
 import datetime
 import time
 
+import config
 import feedparser
 import praw
 
@@ -11,20 +12,12 @@ def log_in_to_reddit():
         user_agent='YouTube2Reddit')
 
 
-def get_subbed_users():
-    subbed_users = set()
-    with open('config/subbed_users.txt') as f:
-        for creator in f.readlines():
-            subbed_users.add(creator.strip())
-    return subbed_users
+def get_subbed_users(reddit):
+    return set(read_wiki_subscriptions(reddit, config.sub_name, 'subbed_users'))
 
 
 def get_subbed_channels():
-    subbed_channels = set()
-    with open('config/subbed_channels.txt') as f:
-        for creator in f.readlines():
-            subbed_channels.add(creator.strip())
-    return subbed_channels
+    return set(read_wiki_subscriptions(reddit, config.sub_name, 'subbed_channels'))
 
 
 def get_videos(channel_feed):
@@ -40,6 +33,5 @@ def get_videos(channel_feed):
     return items
 
 
-def write_last_run():
-    with open('config/last_run.txt', 'w+') as f:
-        f.write(str(int(time.time())))
+def read_wiki_subscriptions(reddit, subreddit_name, page):
+    return [x for x in reddit.subreddit(subreddit_name).wiki[page].content_md.split() if x != '']

@@ -11,8 +11,10 @@ if __name__ == '__main__':
         already_submitted.remove('')
     submitted_this_run = []
 
-    subbed_users = functions.get_subbed_users()
-    subbed_channels = functions.get_subbed_channels()
+    reddit = functions.log_in_to_reddit()
+
+    subbed_users = functions.get_subbed_users(reddit)
+    subbed_channels = functions.get_subbed_channels(reddit)
 
     for user in subbed_users:
         videos = functions.get_videos('https://www.youtube.com/feeds/videos.xml?user=' + user)
@@ -26,7 +28,7 @@ if __name__ == '__main__':
             if video['url'] not in already_submitted:
                 videos_to_submit.append(video)
 
-    reddit = functions.log_in_to_reddit()
+
 
     for video in videos_to_submit:
         try:
