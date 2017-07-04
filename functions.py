@@ -7,9 +7,7 @@ import praw
 
 
 def log_in_to_reddit():
-    return praw.Reddit(
-        'YouTube2Reddit',
-        user_agent='YouTube2Reddit')
+    return praw.Reddit('YouTube2Reddit', user_agent='YouTube2Reddit')
 
 
 def get_subbed_users(reddit):
@@ -66,5 +64,5 @@ def read_wiki_subscriptions(reddit, subreddit_name, page):
 
 
 def write_to_wiki(reddit, page, content):
-    print('Updating wiki… (page %s)' % page)
+    print('Updating wiki page %s…' % page)
     reddit.subreddit(config.sub_name).wiki.create(page, content)
