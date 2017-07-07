@@ -31,7 +31,7 @@ def extend_subbed_users(reddit, new_users):
 
 def extend_subbed_channels(reddit, new_channels):
     if new_channels:
-        subs = get_subbed_users(reddit)
+        subs = get_subbed_channels(reddit)
         subs.update(new_channels)
         write_to_wiki(reddit, config.subbed_channels_page_name, '  \n'.join(sorted(subs)))
 
