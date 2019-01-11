@@ -21,10 +21,12 @@ Since it's designed to be called periodically, I recommend running it on a cronj
     
     ```
     Define each variable immediately after the = sign in the following way:
-    - `client_id.txt`: The client ID from step 2.
-    - `client_secret.txt`: The client secret from step 2.
-    - `username.txt`: The username you want this script to run on. Make sure it has enough karma to post without captchas.
-    - `password.txt`: The password for that account  
+
+    - `client_id`: The client ID from step 2.
+    - `client_secret`: The client secret from step 2.
+    - `username`: The username you want this script to run on. Make sure it has enough karma to post without captchas.
+    - `password`: The password for that account  
+
     The `praw.ini` file can go either in the directory you plan to execute the script from (as CWD) or in ~/.config/ .
-5. Set up a cronjob (or other method of calling this script) that calls `main.py` at least daily, or as often as you want. **Make sure to run the script in the same directory as `praw.ini`!** The command I will use in my cronjob is `cd ~/YouTube2Reddit && python3 main.py`.
-6. Run `first_run.py` with `python3 first_run.py` while CWD is the root directory of this project.
+5. Set up a cronjob (or other method of calling this script) that calls `main.py` at least daily, or as often as you want. The command I use in my cronjob is `python3 ~/YouTube2Reddit/main.py`.
+6. Run `first_run.py` with `python3 first_run.py`.
