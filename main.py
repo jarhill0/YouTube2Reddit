@@ -10,6 +10,27 @@ class YouTube2Reddit:
         self.subreddit = self.reddit.subreddit(config.sub_name)
         self.memory = VideoMemoryParent(self.subreddit)
 
+    def check_inbox(self):
+        for message in self.reddit.inbox.unread(mark_read=True):
+            message.mark_read()
+
+            if hasattr(message, 'subject') and 'subscribe' in message.subject.lower():
+                subject = message.subject.lower()
+                if ('users' in subject) == ('channels' in subject):
+                    message.reply('Please use exactly one of `users` or `channels` in your subject line.')
+                    continue
+
+                creators = message.body.strip().split()
+                if 'users' in subject:
+                    self.memory.add_subscriptions(users=creators)
+                else:  # 'channels' in subject
+                    self.memory.add_subscriptions(channels=creators)
+
+                message.reply('The following {creators} have been added:\n\n{lst}'.format(
+                    creators='users' if 'users' in subject else 'channels',
+                    lst='\n'.join('    ' + creator for creator in creators)
+                ))
+
     def first_run(self):
         self.memory.already_submitted.add_all(video['id'] for video in self.memory.new_videos())
 
@@ -32,4 +53,6 @@ class YouTube2Reddit:
 
 
 if __name__ == '__main__':
-    YouTube2Reddit().main()
+    yt2r = YouTube2Reddit()
+    yt2r.check_inbox()
+    yt2r.main()
