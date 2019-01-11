@@ -1,17 +1,4 @@
-import functions
-import config
-
-
-def list_old_videos(subbed_users, subbed_channels):
-    videos_to_submit = []
-
-    for user in subbed_users:
-        videos_to_submit.extend(functions.get_videos(config.user_base_url + user))
-    for channel_id in subbed_channels:
-        videos_to_submit.extend(functions.get_videos(config.channel_base_url + channel_id))
-
-    submitted_this_run = [video['id'] for video in videos_to_submit]
-    functions.write_already_submitted(functions.log_in_to_reddit(), submitted_this_run)
+from main import YouTube2Reddit
 
 
 def main():
@@ -23,7 +10,7 @@ def main():
     if not run_it:
         print('Exiting.')
     else:
-        list_old_videos(functions.get_subbed_users(), functions.get_subbed_channels())
+        YouTube2Reddit().first_run()
 
 
 if __name__ == '__main__':

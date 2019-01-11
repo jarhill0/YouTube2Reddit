@@ -1,5 +1,4 @@
-import first_run
-import functions
+from main import YouTube2Reddit
 
 
 def is_username():
@@ -15,28 +14,26 @@ def is_username():
                 'user looks like cgpgrey).')
 
 
-def new_subscription():
-    new_sub = input('Enter channel ID or username.\n')
+def new_subscription(is_user=False):
+    new_sub = input('Enter {}.\n'.format('username' if is_user else 'channel ID'))
     return new_sub.strip()
 
 
 def subscribe():
-    new_users = []
-    new_channels = []
+    new_users = set()
+    new_channels = set()
 
     while True:
-        if is_username():
-            new_users.append(new_subscription())
+        is_user = is_username()
+        if is_user:
+            new_users.add(new_subscription(is_user=is_user))
         else:
-            new_channels.append(new_subscription())
+            new_channels.add(new_subscription(is_user=is_user))
 
         if input('Add another subscription? [y/n]\n').lower() not in ['yes', 'y']:
             break
 
-    reddit = functions.log_in_to_reddit()
-    functions.extend_subbed_users(reddit, new_users)
-    functions.extend_subbed_channels(reddit, new_channels)
-    first_run.list_old_videos(new_users, new_channels)
+    YouTube2Reddit().memory.add_subscriptions(channels=new_channels, users=new_users)
 
 
 if __name__ == '__main__':

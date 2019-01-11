@@ -1,39 +1,35 @@
-import config
-import functions
 import praw
 
+import config
+from memory import VideoMemoryParent
 
-def main():
-    videos_to_submit = []
-    submitted_this_run = set()
-    target_sub = config.sub_name
-    reddit = functions.log_in_to_reddit()
-    already_submitted = functions.get_already_submitted(reddit)
-    subbed_users = functions.get_subbed_users(reddit)
-    subbed_channels = functions.get_subbed_channels(reddit)
 
-    for user in subbed_users:
-        videos = functions.get_videos(config.user_base_url + user)
-        videos_to_submit.extend(v for v in videos if v['id'] not in already_submitted)
+class YouTube2Reddit:
+    def __init__(self):
+        self.reddit = praw.Reddit('YouTube2Reddit', user_agent='YouTube2Reddit')
+        self.subreddit = self.reddit.subreddit(config.sub_name)
+        self.memory = VideoMemoryParent(self.subreddit)
 
-    for channel_id in subbed_channels:
-        videos = functions.get_videos(config.channel_base_url + channel_id)
-        videos_to_submit.extend(v for v in videos if v['id'] not in already_submitted)
+    def first_run(self):
+        self.memory.already_submitted.add_all(video['id'] for video in self.memory.new_videos())
 
-    for video in videos_to_submit:
-        try:
-            reddit.subreddit(target_sub).submit('%s — %s' % (video['title'], video['author']),
-                                                url=video['url'],
-                                                resubmit=False,
-                                                send_replies=False)
-        except praw.exceptions.APIException:
-            print('Already submitted %s by %s.' % (video['title'], video['author']))
-        finally:
-            # Either way, it's already submitted.
-            submitted_this_run.add(video['id'])
+    def main(self):
+        submitted_this_run = set()
 
-    functions.write_already_submitted(reddit, submitted_this_run)
+        for video in self.memory.new_videos():
+            try:
+                self.subreddit.submit('{} — {}'.format(video['title'], video['author']),
+                                      url=video['url'],
+                                      resubmit=False,
+                                      send_replies=False)
+            except praw.exceptions.APIException:
+                print('Already submitted {!r} by {!r}.'.format(video['title'], video['author']))
+            finally:
+                # Either way, it's already submitted.
+                submitted_this_run.add(video['id'])
+
+        self.memory.already_submitted.add_all(submitted_this_run)
 
 
 if __name__ == '__main__':
-    main()
+    YouTube2Reddit().main()
