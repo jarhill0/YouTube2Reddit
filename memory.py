@@ -67,7 +67,7 @@ class VideoMemory:
         if self._contents is None:
             try:
                 self._contents = set(
-                    x for x in self.subreddit.wiki[self.wiki_path].content_md.split(self.delimiter) if x != '')
+                    x for x in self.subreddit.wiki[self.wiki_path].content_md.split() if x != '')
             except NotFound:
                 self._contents = set()
 
