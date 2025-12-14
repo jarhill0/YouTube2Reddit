@@ -44,6 +44,8 @@ class YouTube2Reddit:
         submitted_this_run = set()
 
         for video in self.memory.new_videos():
+            if config.skip_shorts and "/shorts/" in video["url"]:
+                continue
             try:
                 self.subreddit.submit(
                     "{} — {}".format(video["title"], video["author"]),

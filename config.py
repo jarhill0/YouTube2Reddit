@@ -1,5 +1,6 @@
 sub_name = ""
 self_rate_limit = False
+skip_shorts = False
 
 subbed_users_page_name = "subbed_users"
 subbed_channels_page_name = "subbed_channels"
